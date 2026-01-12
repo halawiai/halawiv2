@@ -1,0 +1,52 @@
+stages:
+  - build
+  - deploy
+
+variables:
+  APP_NAME: better-chatbot
+  CHART_DIR: charts/better-chatbot
+  IMAGE: $CI_REGISTRY_IMAGE/better-chatbot
+  IMAGE_TAG: $CI_COMMIT_SHA
+  NAMESPACE: ${NAMESPACE:-chatbot}
+  INGRESS_HOST: ${INGRESS_HOST:-chatbot.example.com}
+
+build:
+  stage: build
+  image: docker:25
+  services:
+    - docker:dind
+  script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+    - docker build -t "$IMAGE:$IMAGE_TAG" -t "$IMAGE:latest" .
+    - docker push "$IMAGE:$IMAGE_TAG"
+    - docker push "$IMAGE:latest"
+  rules:
+    - if: $CI_COMMIT_BRANCH
+
+deploy:
+  stage: deploy
+  image: alpine/helm:3.14.4
+  needs: [build]
+  before_script:
+    - mkdir -p ~/.kube
+    - echo "$KUBECONFIG_FILE" | base64 -d > ~/.kube/config
+    - helm version
+  script:
+    - helm dependency update "$CHART_DIR" || true
+    - helm lint "$CHART_DIR"
+    - helm upgrade --install "$APP_NAME" "$CHART_DIR" \
+        --namespace "$NAMESPACE" --create-namespace \
+        --set image.repository="$IMAGE" \
+        --set image.tag="$IMAGE_TAG" \
+        --set ingress.hosts[0].host="$INGRESS_HOST" \
+        --set ingress.tls[0].hosts[0]="$INGRESS_HOST" \
+        --set env.BETTER_AUTH_URL="https://$INGRESS_HOST" \
+        --set secretEnv.BETTER_AUTH_SECRET="$BETTER_AUTH_SECRET" \
+        --set env.OIDC_ISSUER="$OIDC_ISSUER" \
+        --set env.OIDC_SCOPE="$OIDC_SCOPE" \
+        --set secretEnv.OIDC_CLIENT_ID="$OIDC_CLIENT_ID" \
+        --set secretEnv.OIDC_CLIENT_SECRET="$OIDC_CLIENT_SECRET" \
+        --wait --atomic
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+

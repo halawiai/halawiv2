@@ -2,9 +2,11 @@ import {
   GitHubConfigSchema,
   GoogleConfigSchema,
   MicrosoftConfigSchema,
+  OIDCConfigSchema,
   GitHubConfig,
   GoogleConfig,
   MicrosoftConfig,
+  OIDCConfig,
   AuthConfig,
   AuthConfigSchema,
 } from "app-types/authentication";
@@ -27,6 +29,7 @@ function parseSocialAuthConfigs() {
     github?: GitHubConfig;
     google?: GoogleConfig;
     microsoft?: MicrosoftConfig;
+    saml?: OIDCConfig;
   } = {};
   // DISABLE_SIGN_UP only applies to OAuth signups, not email signups
   const disableSignUp = parseEnvBoolean(process.env.DISABLE_SIGN_UP);
@@ -91,6 +94,29 @@ function parseSocialAuthConfigs() {
         "Do not pass MICROSOFT_CLIENT_SECRET to the client",
         configs,
         configs.microsoft.clientSecret,
+      );
+    }
+  }
+
+  if (
+    process.env.OIDC_ISSUER &&
+    process.env.OIDC_CLIENT_ID &&
+    process.env.OIDC_CLIENT_SECRET
+  ) {
+    const oidcResult = OIDCConfigSchema.safeParse({
+      issuer: process.env.OIDC_ISSUER,
+      clientId: process.env.OIDC_CLIENT_ID,
+      clientSecret: process.env.OIDC_CLIENT_SECRET,
+      scope: process.env.OIDC_SCOPE || "openid profile email",
+      disableSignUp,
+    });
+
+    if (oidcResult.success) {
+      configs.saml = oidcResult.data;
+      experimental_taintUniqueValue(
+        "Do not pass OIDC_CLIENT_SECRET to the client",
+        configs,
+        configs.saml.clientSecret,
       );
     }
   }

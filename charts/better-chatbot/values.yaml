@@ -1,0 +1,96 @@
+replicaCount: 2
+
+image:
+  repository: registry.gitlab.example.com/group/project/better-chatbot
+  tag: latest
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  type: ClusterIP
+  port: 3000
+  targetPort: 3000
+
+ingress:
+  enabled: true
+  className: ""
+  annotations: {}
+  hosts:
+    - host: chatbot.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: chatbot-tls
+      hosts:
+        - chatbot.example.com
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 75
+  targetMemoryUtilizationPercentage: null
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+env:
+  BETTER_AUTH_URL: "https://chatbot.example.com"
+  OIDC_ISSUER: ""
+  OIDC_SCOPE: "openid profile email"
+  DISABLE_EMAIL_SIGN_IN: "1"
+  DISABLE_EMAIL_SIGN_UP: "1"
+  DISABLE_SIGN_UP: "1"
+  NODE_ENV: "production"
+  PORT: "3000"
+
+secretEnv:
+  BETTER_AUTH_SECRET: ""
+  OIDC_CLIENT_ID: ""
+  OIDC_CLIENT_SECRET: ""
+
+extraEnv: []
+extraEnvFrom: []
+extraVolumes: []
+extraVolumeMounts: []
+
+livenessProbe:
+  path: /
+  initialDelaySeconds: 20
+  periodSeconds: 15
+  timeoutSeconds: 5
+  failureThreshold: 6
+
+readinessProbe:
+  path: /
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 3
+  failureThreshold: 6

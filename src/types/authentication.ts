@@ -5,6 +5,7 @@ export const SocialAuthenticationProviderSchema = z.enum([
   "github",
   "google",
   "microsoft",
+  "saml",
 ]);
 
 export type SocialAuthenticationProvider = z.infer<
@@ -32,10 +33,19 @@ export const MicrosoftConfigSchema = z.object({
   prompt: z.literal("select_account").optional(),
 });
 
+export const OIDCConfigSchema = z.object({
+  issuer: z.string().url(),
+  clientId: z.string().min(1),
+  clientSecret: z.string().min(1),
+  scope: z.string().min(1).default("openid profile email"),
+  disableSignUp: z.boolean().optional(),
+});
+
 export const SocialAuthenticationConfigSchema = z.object({
   github: GitHubConfigSchema.optional(),
   google: GoogleConfigSchema.optional(),
   microsoft: MicrosoftConfigSchema.optional(),
+  saml: OIDCConfigSchema.optional(),
 });
 
 export const AuthConfigSchema = z.object({
@@ -47,6 +57,7 @@ export const AuthConfigSchema = z.object({
 export type GitHubConfig = z.infer<typeof GitHubConfigSchema>;
 export type GoogleConfig = z.infer<typeof GoogleConfigSchema>;
 export type MicrosoftConfig = z.infer<typeof MicrosoftConfigSchema>;
+export type OIDCConfig = z.infer<typeof OIDCConfigSchema>;
 export type SocialAuthenticationConfig = z.infer<
   typeof SocialAuthenticationConfigSchema
 >;
