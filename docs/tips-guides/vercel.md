@@ -48,6 +48,6 @@ Database, file storage, and caching are all available on free tiers.
 
 ## Notes
 
-- To enable **web search**, you can request an API key from [Exa](https://dashboard.exa.ai). A free tier is available.
+- To enable **web search**, you can request an API key from [Tavily](https://tavily.com). A free tier is available.
 - Only Remote (SSE, Streamable) MCP servers are supported. STDIO-based servers are not supported on Vercel (consider Docker or Render if needed).
 - Check `.env.example` for all available settings.

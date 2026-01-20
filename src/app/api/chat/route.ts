@@ -9,7 +9,11 @@ import {
   UIMessage,
 } from "ai";
 
-import { customModelProvider, isToolCallUnsupportedModel } from "lib/ai/models";
+import {
+  customModelProvider,
+  isGroqModel,
+  isToolCallUnsupportedModel,
+} from "lib/ai/models";
 
 import { mcpClientsManager } from "lib/ai/mcp/mcp-manager";
 
@@ -322,10 +326,20 @@ export async function POST(request: Request) {
         }
         logger.info(`model: ${chatModel?.provider}/${chatModel?.model}`);
 
+        // Filter out reasoning parts for Groq models (they don't support reasoning)
+        const messagesToSend = isGroqModel(chatModel)
+          ? messages.map((msg) => ({
+              ...msg,
+              parts: msg.parts.filter(
+                (part: any) => part?.type !== "reasoning",
+              ),
+            }))
+          : messages;
+
         const result = streamText({
           model,
           system: systemPrompt,
-          messages: convertToModelMessages(messages),
+          messages: convertToModelMessages(messagesToSend),
           experimental_transform: smoothStream({ chunking: "word" }),
           maxRetries: 2,
           tools: vercelAITooles,

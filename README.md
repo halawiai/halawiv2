@@ -174,11 +174,11 @@ This lets you flexibly choose between autonomous, guided, or tool-free interacti
 
 <img width="1034" height="940" alt="web-search" src="https://github.com/user-attachments/assets/261037d9-e1a7-44ad-b45e-43780390a94e" />
 
-Built-in web search powered by [Exa AI](https://exa.ai). Search the web with semantic AI and extract content from URLs directly in your chats.
+Built-in web search powered by [Tavily AI](https://tavily.com). Search the web with semantic AI optimized for AI applications and extract content from URLs directly in your chats.
 
-- **Optional:** Add `EXA_API_KEY` to `.env` to enable web search
-- **Free Tier:** 1,000 requests/month at no cost, no credit card required
-- **Easy Setup:** Get your API key instantly at [dashboard.exa.ai](https://dashboard.exa.ai)
+- **Optional:** Add `TAVILY_API_KEY` to `.env` to enable web search
+- **Free Tier:** Generous free tier available for development
+- **Easy Setup:** Get your API key instantly at [tavily.com](https://tavily.com)
 
 #### 🎨 Image Generation
 
@@ -308,8 +308,8 @@ POSTGRES_URL=postgres://your_username:your_password@localhost:5432/your_database
 
 # (Optional)
 # === Tools ===
-# Exa AI for web search and content extraction (optional, but recommended for @web and research features)
-EXA_API_KEY=your_exa_api_key_here
+# Tavily AI for web search and content extraction (optional, but recommended for @web and research features)
+TAVILY_API_KEY=your_tavily_api_key_here
 
 
 # Whether to use file-based MCP config (default: false)

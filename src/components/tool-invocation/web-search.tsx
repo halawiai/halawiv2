@@ -59,7 +59,7 @@ function PureWebSearchToolInvocation({ part }: WebSearchToolInvocationProps) {
   };
 
   const images = useMemo(() => {
-    // Exa doesn't provide separate images array, but individual results may have image property
+    // Extract images from search results (Tavily provides images in the response)
     return (
       result?.results
         ?.filter((r) => r.image && !errorSrc.includes(r.image))

@@ -9,9 +9,6 @@ export default () => {
   const nextConfig: NextConfig = {
     output: BUILD_OUTPUT,
     cleanDistDir: true,
-    devIndicators: {
-      position: "bottom-right",
-    },
     env: {
       NO_HTTPS: process.env.NO_HTTPS,
     },

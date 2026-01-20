@@ -7,6 +7,7 @@ services:
       - '3000:3000'
     environment:
       - NO_HTTPS=1
+      - TAVILY_API_KEY=${TAVILY_API_KEY:-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}
     env_file:
       - .env
     dns:
@@ -22,6 +23,8 @@ services:
     image: postgres:17
     env_file:
       - .env
+    ports:
+      - '5433:5432'
     networks:
       - better-chatbot-networks
     volumes:

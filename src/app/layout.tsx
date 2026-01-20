@@ -19,9 +19,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "HALA",
+  title: "Halawi Ai",
   description:
-    "Better Chatbot is a chatbot that uses the Tools to answer questions.",
+    "Halawi Ai is an AI chatbot powered by Groq that uses tools to answer questions.",
 };
 
 export default async function RootLayout({

@@ -138,13 +138,13 @@ export class MCPClient {
         serverUrl: this.serverConfig.url,
         state: oauthState,
         _clientMetadata: {
-          client_name: `HALA-${this.name}`,
+          client_name: `Halawi Ai-${this.name}`,
           grant_types: ["authorization_code", "refresh_token"],
           response_types: ["code"],
           token_endpoint_auth_method: "none", // PKCE flow
           scope: "mcp:tools",
           redirect_uris: [`${BASE_URL}/api/mcp/oauth/callback`],
-          software_id: "HALA",
+          software_id: "Halawi Ai",
           software_version: "1.0.0",
         },
         onRedirectToAuthorization: async (authorizationUrl: URL) => {
@@ -194,7 +194,7 @@ export class MCPClient {
       this.client = undefined;
 
       const client = new Client({
-        name: `HALA-${this.name}`,
+        name: `Halawi Ai-${this.name}`,
         version: "1.0.0",
       });
 

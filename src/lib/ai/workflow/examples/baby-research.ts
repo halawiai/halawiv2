@@ -230,7 +230,7 @@ export const babyResearchNodes: Partial<DBNode>[] = [
               type: "string",
               enum: ["auto", "keyword", "neural"],
               description:
-                "Search type - auto lets Exa decide, keyword for exact matches, neural for semantic search",
+                "Search type - auto uses basic search, keyword for exact matches, neural uses advanced search",
               default: "auto",
             },
             category: {
@@ -1294,7 +1294,7 @@ export const babyResearchNodes: Partial<DBNode>[] = [
               type: "string",
               enum: ["auto", "keyword", "neural"],
               description:
-                "Search type - auto lets Exa decide, keyword for exact matches, neural for semantic search",
+                "Search type - auto uses basic search, keyword for exact matches, neural uses advanced search",
               default: "auto",
             },
             category: {

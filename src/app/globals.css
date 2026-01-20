@@ -1516,4 +1516,30 @@
   .transition-colors-300 {
     @apply transition-colors duration-300;
   }
+
+  /* Hide Vercel badge/icon - "N" logo that appears on pages */
+  [data-vercel-badge],
+  .vercel-badge,
+  #vercel-badge,
+  /* Hide Vercel logo links */
+    a[href*="vercel.com"][target="_blank"]:has(svg),
+  a[href*="vercel.com"]:has(svg[width="20"]),
+  a[href*="vercel.com"]:has(svg[height="20"]),
+  a[href*="vercel.com"][aria-label*="Vercel"],
+  a[href*="vercel.com"][aria-label*="vercel"],
+  /* Hide Vercel logo SVG elements */
+    svg[viewBox*="0 0 283 64"],
+  svg[viewBox*="0 0 76 65"],
+  /* Hide elements with specific Vercel badge classes/ids */
+    [class*="vercel"][class*="badge"],
+  [id*="vercel"][id*="badge"],
+  [data-testid*="vercel-badge"],
+  /* Hide fixed position Vercel badges (common placement) */
+    [class*="vercel"]:has(svg),
+  [id*="vercel"]:has(svg) {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
 }

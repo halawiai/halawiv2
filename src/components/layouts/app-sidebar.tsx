@@ -39,7 +39,7 @@ export function AppSidebar({
       className="border-r border-sidebar-border/80"
     >
       <SidebarHeaderShared
-        title="HALA"
+        title="Halawi Ai"
         href="/"
         enableShortcuts={true}
         onLinkClick={() => {
