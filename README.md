@@ -1,20 +1,12 @@
-<img width="1184" height="576" alt="thumbnail" loading="lazy" src="https://github.com/user-attachments/assets/d6ba80ff-a62a-4920-b266-85c4a89d6076" />
-
 [![MCP Supported](https://img.shields.io/badge/MCP-Supported-00c853)](https://modelcontextprotocol.io/introduction)
 [![Local First](https://img.shields.io/badge/Local-First-blue)](https://localfirstweb.dev/)
 [![Discord](https://img.shields.io/discord/1374047276074537103?label=Discord&logo=discord&color=5865F2)](https://discord.gg/gCRu69Upnp)
 
-[![Deploy with Vercel](https://vercel.com/button)](<https://vercel.com/new/clone?repository-url=https://github.com/halawiai/halawiv2&env=BETTER_AUTH_SECRET&env=OPENAI_API_KEY&env=GOOGLE_GENERATIVE_AI_API_KEY&env=ANTHROPIC_API_KEY&envDescription=BETTER_AUTH_SECRET+is+required+(enter+any+secret+value).+At+least+one+LLM+provider+API+key+(OpenAI,+Claude,+or+Google)+is+required,+but+you+can+add+all+of+them.+See+the+link+below+for+details.&envLink=https://github.com/halawiai/halawiv2/blob/main/.env.example&demo-title=halawi-ai&demo-description=Halawi+AI+-+An+AI+Chatbot+Built+With+Next.js+and+the+AI+SDK+by+Vercel.&products=[{"type":"integration","protocol":"storage","productSlug":"neon","integrationSlug":"neon"},{"type":"integration","protocol":"storage","productSlug":"upstash-kv","integrationSlug":"upstash"},{"type":"blob"}]>)
-
-🚀 **Deploy with the button above** to try it live, or see the [preview](#preview) below!
-
 ## Quick Start 🚀
 
-> **Get your app running in minutes! No installation or payment required.**
+> **Get Halawi AI running locally or with Docker.**
 
-You only need **one AI Provider API Key** (OpenAI, Claude, Gemini, etc.). Everything else runs on free tiers - database, file storage, and hosting.
-
-👉 **[Click this guide to deploy your site with just a few clicks](docs/tips-guides/vercel.md)**
+You need **one AI Provider API Key** (OpenAI, Claude, Gemini, etc.), a database, and the config from `.env`. See [Getting Started](#getting-started) below.
 
 ---
 
@@ -26,8 +18,7 @@ You only need **one AI Provider API Key** (OpenAI, Claude, Gemini, etc.). Everyt
 • **Automation** - Custom agents, visual workflows, artifact generation  
 • **Collaboration** - Share agents, workflows, and MCP configurations with your team  
 • **Voice Assistant** - Realtime voice chat with full MCP tool integration  
-• **Intuitive UX** - Instantly invoke any feature with `@mention`  
-• **Quick Start** - Deploy free with Vercel Deploy button
+• **Intuitive UX** - Instantly invoke any feature with `@mention`
 
 Built with Vercel AI SDK and Next.js, combining the best features of leading AI services into one platform.
 
@@ -52,7 +43,6 @@ Built with Vercel AI SDK and Next.js, combining the best features of leading AI 
 - [📘 Guides](#-guides)
   - [🔌 MCP Server Setup \& Tool Testing](#-mcp-server-setup--tool-testing)
   - [🐳 Docker Hosting Guide](#-docker-hosting-guide)
-  - [▲ Vercel Hosting Guide](#-vercel-hosting-guide)
   - [🗂️ File Storage Drivers](#️-file-storage-drivers)
   - [🎯 System Prompts \& Chat Customization](#-system-prompts--chat-customization)
   - [🔐 OAuth Sign-In Setup](#-oauth-sign-in-setup)
@@ -64,15 +54,13 @@ Built with Vercel AI SDK and Next.js, combining the best features of leading AI 
 - [🙌 Contributing](#-contributing)
 - [💬 Join Our Discord](#-join-our-discord)
 
-> This project is evolving at lightning speed! ⚡️ We're constantly shipping new features and smashing bugs. **Star this repo** to join the ride and stay in the loop with the latest updates!
+> Halawi AI is evolving at lightning speed! ⚡️ We're constantly shipping new features and smashing bugs. **Star this repo** to stay in the loop.
 
 ## Preview
 
 Get a feel for the UX — here's a quick look at what's possible.
 
 ### 🧩 Browser Automation with Playwright MCP
-
-![preview](https://github.com/user-attachments/assets/e4febb04-26d5-45da-a7bb-f7d452d333c2)
 
 **Example:** Control a web browser using Microsoft's [playwright-mcp](https://github.com/microsoft/playwright-mcp) tool.
 
@@ -95,10 +83,6 @@ Sample prompt:
 
 ### 🔗 Visual Workflows as Custom Tools
 
-<img width="1912" height="953" alt="workflow" loading="lazy" src="https://github.com/user-attachments/assets/e69e72e8-595c-480e-b519-4531f4c6331f" />
-
-<img width="1567" alt="workflow-mention" loading="lazy" src="https://github.com/user-attachments/assets/cf3e1339-ee44-4615-a71d-f6b46833e41f" />
-
 **Example:** Create custom workflows that become callable tools in your chat conversations.
 
 - Build visual workflows by connecting LLM nodes (for AI reasoning) and Tool nodes (for MCP tool execution)
@@ -108,8 +92,6 @@ Sample prompt:
 <br/>
 
 ### 🤖 Custom Agents
-
-<img width="1567" alt="agent-example" loading="lazy" src="https://github.com/user-attachments/assets/d0a325c0-ff1e-4038-b6bf-fcf57659a5c1" />
 
 **Example:** Create specialized AI agents with custom instructions and tool access.
 
@@ -127,16 +109,9 @@ For instance, create a GitHub Manager agent by:
 
 ### 🎙️ Realtime Voice Assistant + MCP Tools
 
-<p align="center">
-  <video src="https://github.com/user-attachments/assets/e2657b8c-ce0b-40dd-80b6-755324024973" width="100%" />
-</p>
-
-This demo showcases a **realtime voice-based chatbot assistant** built with OpenAI's new Realtime API — now extended with full **MCP tool integration**.
-Talk to the assistant naturally, and watch it execute tools in real time.
+Realtime voice-based assistant built with OpenAI's Realtime API and full **MCP tool integration**. Talk to the assistant naturally and it can execute tools in real time.
 
 ### ⚡️ Quick Tool Mentions (`@`) & Presets
-
-<img width="1225" alt="image" src="https://github.com/user-attachments/assets/dfe76b3b-c3d8-436e-8a7c-7b23292e234c" loading="lazy"/>
 
 Quickly call tool during chat by typing `@toolname`.
 No need to memorize — just type `@` and pick from the list!
@@ -153,8 +128,6 @@ Switch between presets instantly with a click — perfect for organizing tools b
 
 ### 🧭 Tool Choice Mode
 
-<img width="1225" alt="image" src="https://github.com/user-attachments/assets/8fc64c6a-30c9-41a4-a5e5-4e8804f73473" loading="lazy"/>
-
 Control how tools are used in each chat with **Tool Choice Mode** — switch anytime with `⌘P`.
 
 - **Auto:** The model automatically calls tools when needed.
@@ -167,8 +140,6 @@ This lets you flexibly choose between autonomous, guided, or tool-free interacti
 
 #### 🌐 Web Search
 
-<img width="1034" height="940" alt="web-search" src="https://github.com/user-attachments/assets/261037d9-e1a7-44ad-b45e-43780390a94e" />
-
 Built-in web search powered by [Tavily AI](https://tavily.com). Search the web with semantic AI optimized for AI applications and extract content from URLs directly in your chats.
 
 - **Optional:** Add `TAVILY_API_KEY` to `.env` to enable web search
@@ -177,8 +148,6 @@ Built-in web search powered by [Tavily AI](https://tavily.com). Search the web w
 
 #### 🎨 Image Generation
 
-<img width="1034" height="940" loading="lazy" alt="image-generation" src="https://github.com/user-attachments/assets/b081c837-8948-4f4d-a2f4-c8630cf0eaa2" />
-
 Built-in image generation and editing capabilities powered by AI models. Create, edit, and modify images directly in your chats.
 
 - **Supported Operations:** Image generation, editing, and composition
@@ -186,9 +155,7 @@ Built-in image generation and editing capabilities powered by AI models. Create,
 
 #### ⚡️ JS,PYTHON Executor
 
-<img width="1225" alt="js-executor-preview" src="https://github.com/user-attachments/assets/7deed824-e70b-46d4-a294-de20ed4dc869" loading="lazy"/>
-
-It is a simple JS execution tool.
+Simple JS and Python execution in chat.
 
 #### 📊 Data Visualization Tools
 
@@ -365,11 +332,7 @@ Step-by-step setup guides for running and configuring Halawi AI.
 
 #### [🐳 Docker Hosting Guide](./docs/tips-guides/docker.md)
 
-- How to self-host the chatbot using Docker, including environment configuration.
-
-#### [▲ Vercel Hosting Guide](./docs/tips-guides/vercel.md)
-
-- Deploy the chatbot to Vercel with simple setup steps for production use.
+- How to self-host Halawi AI using Docker, including environment configuration.
 
 #### [🗂️ File Storage Drivers](./docs/tips-guides/file-storage.md)
 
@@ -377,7 +340,7 @@ Step-by-step setup guides for running and configuring Halawi AI.
 
 #### [🎯 System Prompts & Chat Customization](./docs/tips-guides/system-prompts-and-customization.md)
 
-- Personalize your chatbot experience with custom system prompts, user preferences, and MCP tool instructions
+- Personalize your Halawi AI experience with custom system prompts, user preferences, and MCP tool instructions
 
 #### [🔐 OAuth Sign-In Setup](./docs/tips-guides/oauth.md)
 
@@ -427,7 +390,7 @@ We welcome all contributions! Bug reports, feature ideas, code improvements — 
 
 **For detailed contribution guidelines**, please see our [Contributing Guide](./CONTRIBUTING.md).
 
-**Language Translations:** Help us make the chatbot accessible to more users by adding new language translations. See [language.md](./messages/language.md) for instructions on how to contribute translations.
+**Language Translations:** Help us make Halawi AI accessible to more users by adding new language translations. See [language.md](./messages/language.md) for instructions on how to contribute translations.
 
 Let's build it together 🚀
 
