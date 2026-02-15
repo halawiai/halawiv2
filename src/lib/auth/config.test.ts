@@ -19,11 +19,6 @@ describe("Auth Config", () => {
     vi.unstubAllEnvs();
 
     // Delete all auth-related environment variables
-    delete process.env.GITHUB_CLIENT_ID;
-    delete process.env.GITHUB_CLIENT_SECRET;
-    delete process.env.GOOGLE_CLIENT_ID;
-    delete process.env.GOOGLE_CLIENT_SECRET;
-    delete process.env.GOOGLE_FORCE_ACCOUNT_SELECTION;
     delete process.env.MICROSOFT_CLIENT_ID;
     delete process.env.MICROSOFT_CLIENT_SECRET;
     delete process.env.MICROSOFT_TENANT_ID;
@@ -47,8 +42,6 @@ describe("Auth Config", () => {
         emailAndPasswordEnabled: true,
         signUpEnabled: true,
         socialAuthenticationProviders: {
-          github: undefined,
-          google: undefined,
           microsoft: undefined,
         },
       });
@@ -75,58 +68,6 @@ describe("Auth Config", () => {
       const config = getAuthConfig();
       expect(config.emailAndPasswordEnabled).toBe(true);
       expect(config.signUpEnabled).toBe(true);
-    });
-
-    it("should include GitHub config when credentials are provided", () => {
-      vi.stubEnv("GITHUB_CLIENT_ID", "github-client-id");
-      vi.stubEnv("GITHUB_CLIENT_SECRET", "github-client-secret");
-
-      const config = getAuthConfig();
-      expect(config.socialAuthenticationProviders.github).toEqual({
-        clientId: "github-client-id",
-        clientSecret: "github-client-secret",
-        disableSignUp: false,
-      });
-    });
-
-    it("should include GitHub config with disableSignUp when DISABLE_SIGN_UP is set", () => {
-      vi.stubEnv("GITHUB_CLIENT_ID", "github-client-id");
-      vi.stubEnv("GITHUB_CLIENT_SECRET", "github-client-secret");
-      vi.stubEnv("DISABLE_SIGN_UP", "1");
-
-      const config = getAuthConfig();
-      expect(config.socialAuthenticationProviders.github).toEqual({
-        clientId: "github-client-id",
-        clientSecret: "github-client-secret",
-        disableSignUp: true,
-      });
-    });
-
-    it("should include Google config with force account selection", () => {
-      vi.stubEnv("GOOGLE_CLIENT_ID", "google-client-id");
-      vi.stubEnv("GOOGLE_CLIENT_SECRET", "google-client-secret");
-      vi.stubEnv("GOOGLE_FORCE_ACCOUNT_SELECTION", "true");
-
-      const config = getAuthConfig();
-      expect(config.socialAuthenticationProviders.google).toEqual({
-        clientId: "google-client-id",
-        clientSecret: "google-client-secret",
-        prompt: "select_account",
-        disableSignUp: false,
-      });
-    });
-
-    it("should include Google config without force account selection", () => {
-      vi.stubEnv("GOOGLE_CLIENT_ID", "google-client-id");
-      vi.stubEnv("GOOGLE_CLIENT_SECRET", "google-client-secret");
-      vi.stubEnv("GOOGLE_FORCE_ACCOUNT_SELECTION", "false");
-
-      const config = getAuthConfig();
-      expect(config.socialAuthenticationProviders.google).toEqual({
-        clientId: "google-client-id",
-        clientSecret: "google-client-secret",
-        disableSignUp: false,
-      });
     });
 
     it("should include Microsoft config with custom tenant ID", () => {
@@ -171,15 +112,10 @@ describe("Auth Config", () => {
       });
     });
 
-    it("should handle complete configuration with all providers", () => {
+    it("should handle complete configuration with Microsoft only", () => {
       vi.stubEnv("DISABLE_EMAIL_SIGN_IN", "1");
       vi.stubEnv("DISABLE_EMAIL_SIGN_UP", "1");
       vi.stubEnv("DISABLE_SIGN_UP", "1");
-      vi.stubEnv("GITHUB_CLIENT_ID", "github-client-id");
-      vi.stubEnv("GITHUB_CLIENT_SECRET", "github-client-secret");
-      vi.stubEnv("GOOGLE_CLIENT_ID", "google-client-id");
-      vi.stubEnv("GOOGLE_CLIENT_SECRET", "google-client-secret");
-      vi.stubEnv("GOOGLE_FORCE_ACCOUNT_SELECTION", "true");
       vi.stubEnv("MICROSOFT_CLIENT_ID", "microsoft-client-id");
       vi.stubEnv("MICROSOFT_CLIENT_SECRET", "microsoft-client-secret");
       vi.stubEnv("MICROSOFT_TENANT_ID", "custom-tenant");
@@ -191,17 +127,6 @@ describe("Auth Config", () => {
         emailAndPasswordEnabled: false,
         signUpEnabled: false,
         socialAuthenticationProviders: {
-          github: {
-            clientId: "github-client-id",
-            clientSecret: "github-client-secret",
-            disableSignUp: true,
-          },
-          google: {
-            clientId: "google-client-id",
-            clientSecret: "google-client-secret",
-            prompt: "select_account",
-            disableSignUp: true,
-          },
           microsoft: {
             clientId: "microsoft-client-id",
             clientSecret: "microsoft-client-secret",
@@ -211,25 +136,6 @@ describe("Auth Config", () => {
           },
         },
       });
-    });
-
-    it("should handle partial provider configurations", () => {
-      vi.stubEnv("GITHUB_CLIENT_ID", "github-client-id");
-      vi.stubEnv("GITHUB_CLIENT_SECRET", "github-client-secret");
-      // Missing Google and Microsoft credentials
-
-      const config = getAuthConfig();
-      expect(config.socialAuthenticationProviders.github).toBeDefined();
-      expect(config.socialAuthenticationProviders.google).toBeUndefined();
-      expect(config.socialAuthenticationProviders.microsoft).toBeUndefined();
-    });
-
-    it("should handle empty string environment variables", () => {
-      vi.stubEnv("GITHUB_CLIENT_ID", "");
-      vi.stubEnv("GITHUB_CLIENT_SECRET", "github-client-secret");
-
-      const config = getAuthConfig();
-      expect(config.socialAuthenticationProviders.github).toBeUndefined();
     });
 
     it("should fallback to defaults when AuthConfig parsing fails", () => {
@@ -244,8 +150,6 @@ describe("Auth Config", () => {
         emailAndPasswordEnabled: true,
         signUpEnabled: true,
         socialAuthenticationProviders: {
-          github: undefined,
-          google: undefined,
           microsoft: undefined,
         },
       });

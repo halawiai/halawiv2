@@ -18,8 +18,6 @@ import { Loader } from "lucide-react";
 import { safe } from "ts-safe";
 import { authClient } from "auth/client";
 import { toast } from "sonner";
-import { GithubIcon } from "ui/github-icon";
-import { GoogleIcon } from "ui/google-icon";
 import { useTranslations } from "next-intl";
 import { MicrosoftIcon } from "ui/microsoft-icon";
 import { SocialAuthenticationProvider } from "app-types/authentication";
@@ -141,26 +139,6 @@ export default function SignIn({
                 </div>
               )}
               <div className="flex flex-col gap-2 w-full">
-                {socialAuthenticationProviders.includes("google") && (
-                  <Button
-                    variant="outline"
-                    onClick={() => handleSocialSignIn("google")}
-                    className="flex-1 w-full"
-                  >
-                    <GoogleIcon className="size-4 fill-foreground" />
-                    Google
-                  </Button>
-                )}
-                {socialAuthenticationProviders.includes("github") && (
-                  <Button
-                    variant="outline"
-                    onClick={() => handleSocialSignIn("github")}
-                    className="flex-1 w-full"
-                  >
-                    <GithubIcon className="size-4 fill-foreground" />
-                    GitHub
-                  </Button>
-                )}
                 {socialAuthenticationProviders.includes("microsoft") && (
                   <Button
                     variant="outline"

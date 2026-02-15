@@ -8,6 +8,9 @@ export const PROMPT_PASTE_MAX_LENGTH = 1000;
 
 export const IS_VERCEL_ENV = process.env.VERCEL === "1";
 export const IS_DOCKER_ENV = process.env.DOCKER_BUILD === "1";
+/** When true, skip DB migrations on startup (e.g. when Postgres is not running). */
+export const SKIP_DB_MIGRATE =
+  process.env.SKIP_DB_MIGRATE === "1" || process.env.SKIP_DB_MIGRATE === "true";
 
 export const IS_MCP_SERVER_REMOTE_ONLY = IS_VERCEL_ENV;
 export const FILE_BASED_MCP_CONFIG =

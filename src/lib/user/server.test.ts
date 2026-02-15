@@ -61,8 +61,7 @@ describe("User Server", () => {
     it("should correctly identify password vs OAuth accounts", async () => {
       const mockAccounts = [
         { providerId: "credential", id: "1" },
-        { providerId: "google", id: "2" },
-        { providerId: "github", id: "3" },
+        { providerId: "microsoft", id: "2" },
       ];
       vi.mocked(auth.api.listUserAccounts).mockResolvedValue(
         mockAccounts as any,
@@ -71,14 +70,11 @@ describe("User Server", () => {
       const result = await getUserAccounts("user-1");
 
       expect(result.hasPassword).toBe(true);
-      expect(result.oauthProviders).toEqual(["google", "github"]);
+      expect(result.oauthProviders).toEqual(["microsoft"]);
     });
 
     it("should handle OAuth-only accounts", async () => {
-      const mockAccounts = [
-        { providerId: "google", id: "1" },
-        { providerId: "github", id: "2" },
-      ];
+      const mockAccounts = [{ providerId: "microsoft", id: "1" }];
       vi.mocked(auth.api.listUserAccounts).mockResolvedValue(
         mockAccounts as any,
       );
@@ -86,7 +82,7 @@ describe("User Server", () => {
       const result = await getUserAccounts("user-1");
 
       expect(result.hasPassword).toBe(false);
-      expect(result.oauthProviders).toEqual(["google", "github"]);
+      expect(result.oauthProviders).toEqual(["microsoft"]);
     });
 
     it("should handle password-only accounts", async () => {
@@ -105,7 +101,7 @@ describe("User Server", () => {
       const mockAccounts = [
         { providerId: "credential", id: "1" },
         { providerId: "credential", id: "2" }, // multiple credential accounts
-        { providerId: "google", id: "3" },
+        { providerId: "microsoft", id: "3" },
       ];
       vi.mocked(auth.api.listUserAccounts).mockResolvedValue(
         mockAccounts as any,
@@ -114,7 +110,7 @@ describe("User Server", () => {
       const result = await getUserAccounts("user-1");
 
       expect(result.hasPassword).toBe(true);
-      expect(result.oauthProviders).toEqual(["google"]); // credential filtered out
+      expect(result.oauthProviders).toEqual(["microsoft"]); // credential filtered out
     });
   });
 

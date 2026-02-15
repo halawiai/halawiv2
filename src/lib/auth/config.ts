@@ -1,12 +1,6 @@
 import {
-  GitHubConfigSchema,
-  GoogleConfigSchema,
   MicrosoftConfigSchema,
-  OIDCConfigSchema,
-  GitHubConfig,
-  GoogleConfig,
   MicrosoftConfig,
-  OIDCConfig,
   AuthConfig,
   AuthConfigSchema,
 } from "app-types/authentication";
@@ -25,53 +19,9 @@ try {
 import { parseEnvBoolean } from "../utils";
 
 function parseSocialAuthConfigs() {
-  const configs: {
-    github?: GitHubConfig;
-    google?: GoogleConfig;
-    microsoft?: MicrosoftConfig;
-    saml?: OIDCConfig;
-  } = {};
+  const configs: { microsoft?: MicrosoftConfig } = {};
   // DISABLE_SIGN_UP only applies to OAuth signups, not email signups
   const disableSignUp = parseEnvBoolean(process.env.DISABLE_SIGN_UP);
-
-  if (process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET) {
-    const githubResult = GitHubConfigSchema.safeParse({
-      clientId: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      disableSignUp,
-    });
-    if (githubResult.success) {
-      configs.github = githubResult.data;
-      experimental_taintUniqueValue(
-        "Do not pass GITHUB_CLIENT_SECRET to the client",
-        configs,
-        configs.github.clientSecret,
-      );
-    }
-  }
-
-  if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
-    const forceAccountSelection = parseEnvBoolean(
-      process.env.GOOGLE_FORCE_ACCOUNT_SELECTION,
-    );
-
-    const googleConfig: GoogleConfig = {
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      ...(forceAccountSelection && { prompt: "select_account" as const }),
-      disableSignUp,
-    };
-
-    const googleResult = GoogleConfigSchema.safeParse(googleConfig);
-    if (googleResult.success) {
-      configs.google = googleResult.data;
-      experimental_taintUniqueValue(
-        "Do not pass GOOGLE_CLIENT_SECRET to the client",
-        configs,
-        configs.google.clientSecret,
-      );
-    }
-  }
 
   if (process.env.MICROSOFT_CLIENT_ID && process.env.MICROSOFT_CLIENT_SECRET) {
     const forceAccountSelection = parseEnvBoolean(
@@ -94,29 +44,6 @@ function parseSocialAuthConfigs() {
         "Do not pass MICROSOFT_CLIENT_SECRET to the client",
         configs,
         configs.microsoft.clientSecret,
-      );
-    }
-  }
-
-  if (
-    process.env.OIDC_ISSUER &&
-    process.env.OIDC_CLIENT_ID &&
-    process.env.OIDC_CLIENT_SECRET
-  ) {
-    const oidcResult = OIDCConfigSchema.safeParse({
-      issuer: process.env.OIDC_ISSUER,
-      clientId: process.env.OIDC_CLIENT_ID,
-      clientSecret: process.env.OIDC_CLIENT_SECRET,
-      scope: process.env.OIDC_SCOPE || "openid profile email",
-      disableSignUp,
-    });
-
-    if (oidcResult.success) {
-      configs.saml = oidcResult.data;
-      experimental_taintUniqueValue(
-        "Do not pass OIDC_CLIENT_SECRET to the client",
-        configs,
-        configs.saml.clientSecret,
       );
     }
   }

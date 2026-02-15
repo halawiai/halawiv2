@@ -1,6 +1,5 @@
 [![MCP Supported](https://img.shields.io/badge/MCP-Supported-00c853)](https://modelcontextprotocol.io/introduction)
 [![Local First](https://img.shields.io/badge/Local-First-blue)](https://localfirstweb.dev/)
-[![Discord](https://img.shields.io/discord/1374047276074537103?label=Discord&logo=discord&color=5865F2)](https://discord.gg/gCRu69Upnp)
 
 ## Quick Start 🚀
 
@@ -52,7 +51,6 @@ Built with Vercel AI SDK and Next.js, combining the best features of leading AI 
   - [💬 Temporary Chat Windows](#-temporary-chat-windows)
 - [🗺️ Roadmap](#️-roadmap)
 - [🙌 Contributing](#-contributing)
-- [💬 Join Our Discord](#-join-our-discord)
 
 > Halawi AI is evolving at lightning speed! ⚡️ We're constantly shipping new features and smashing bugs. **Star this repo** to stay in the loop.
 
@@ -291,19 +289,8 @@ BLOB_READ_WRITE_TOKEN=
 # FILE_STORAGE_S3_REGION=
 
 # (Optional)
-# === OAuth Settings ===
-# Fill in these values only if you want to enable Google/GitHub/Microsoft login
-
-#GitHub
-GITHUB_CLIENT_ID=
-GITHUB_CLIENT_SECRET=
-
-#Google
-GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_SECRET=
-# Set to 1 to force account selection
-GOOGLE_FORCE_ACCOUNT_SELECTION=
-
+# === OAuth Settings (Microsoft only) ===
+# Fill in these values to enable Microsoft login
 
 # Microsoft
 MICROSOFT_CLIENT_ID=
@@ -393,9 +380,3 @@ We welcome all contributions! Bug reports, feature ideas, code improvements — 
 **Language Translations:** Help us make Halawi AI accessible to more users by adding new language translations. See [language.md](./messages/language.md) for instructions on how to contribute translations.
 
 Let's build it together 🚀
-
-## 💬 Join Our Discord
-
-[![Discord](https://img.shields.io/discord/1374047276074537103?label=Discord&logo=discord&color=5865F2)](https://discord.gg/gCRu69Upnp)
-
-Connect with the community, ask questions, and get support on our official Discord server!
